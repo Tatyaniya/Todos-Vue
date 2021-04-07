@@ -53,8 +53,8 @@ export default {
                 this.validation.reset();
             })
         },
-        checkTodosAll() {
-            this.checkAll();
+        checkTodosAll(e) {
+            this.checkAll(e);
         }
     }
 }
