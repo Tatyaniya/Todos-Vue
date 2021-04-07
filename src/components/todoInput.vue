@@ -2,10 +2,10 @@
     .todo-input
         div.error {{validation.firstError('todo.name')}}
         input.check(
-                type="checkbox"
-                @change="checkTodosAll"
-                :todos="todos"
-            )
+            type="checkbox"
+            @change="checkTodosAll"
+            :checkedAll="checkedAll"
+        )
         input.input(
             type="text"
             placeholder="Todo Name"
@@ -40,7 +40,7 @@ export default {
             }
         }
     },
-     computed: {
+    computed: {
         ...mapState({
             todos: state => state.todos.todos
         }),

@@ -20,6 +20,9 @@ const todos = {
         },
         checkAll(state, todos) {
             state.todos = state.todos.map(item => item.checked = true);
+        },
+        clearTodo(state, todos) {
+            this.todos = [];
         }
     },
     actions: {},
