@@ -4,7 +4,6 @@
         input.check(
             type="checkbox"
             @change="checkTodosAll"
-            :checkedAll="checkedAll"
         )
         input.input(
             type="text"
@@ -19,7 +18,6 @@
 
 <script>
 import { Validator } from 'simple-vue-validator';
-import { mapState } from 'vuex';
 import { mapMutations } from 'vuex';
 
 let uniqId = 0;
@@ -40,11 +38,6 @@ export default {
             }
         }
     },
-    computed: {
-        ...mapState({
-            todos: state => state.todos.todos
-        }),
-    },
     methods: {
         ...mapMutations(['addTodo', 'checkAll']),
         addNewTodo() {
@@ -61,7 +54,7 @@ export default {
             })
         },
         checkTodosAll() {
-            this.todos = this.checkAll(todos);
+            this.checkAll();
         }
     }
 }

@@ -18,11 +18,14 @@ const todos = {
         filterTodos(state, filter) {
             state.filter = filter;
         },
-        checkAll(state, todos) {
-            state.todos = state.todos.map(item => item.checked = true);
+        checkAll(state) {
+            state.todos = state.todos.map(item => {
+                item.checked = true;
+                return item;
+            });
         },
-        clearTodo(state, todos) {
-            this.todos = [];
+        clearTodos(state) {
+            state.todos = [];
         }
     },
     actions: {},

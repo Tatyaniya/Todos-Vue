@@ -24,7 +24,7 @@ import todoListFilter from './todoListFilter';
 import { mapMutations } from 'vuex';
 
 export default {
-    ...mapMutations(['clearTodo']),
+    ...mapMutations(['clearTodos']),
     props: {
         todos: Array
     },
@@ -34,7 +34,7 @@ export default {
     },
     methods: {
         clearAllTodos() {
-            this.clearTodo();
+            this.clearTodos();
         }
     }
 }
