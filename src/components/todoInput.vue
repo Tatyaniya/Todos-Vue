@@ -1,19 +1,29 @@
 <template lang="pug">
     .todo-input
+        div.error {{validation.firstError('todo.name')}}
         input.input(
             type="text"
             placeholder="Todo Name"
             autofocus
             v-model="todo.name"
+            :class="{'valid-error': validation.hasError('todo.name')}"
             @keydown.enter="addTodo"
         )
         
 </template>
 
 <script>
+import {Validator} from 'simple-vue-validator';
+
 let uniqId = 0;
 
 export default {
+    mixin: [require('simple-vue-validator').mixin],
+    validators: {
+        'todo.name'(value) {
+            return Validator.value(value).required("Поле не может быть пустым");
+        }
+    },
     data() {
         return {
             todo: {
@@ -28,10 +38,16 @@ export default {
     },
     methods: {
         addTodo() {
-            uniqId++;
-            this.todo.id = uniqId;
-            this.$emit('addTodo', {...this.todo});
-            this.todo.name = "";
+            this.$validate().then(success => {
+                if (!success) return;
+
+                uniqId++;
+                this.todo.id = uniqId;
+                this.$emit('addTodo', {...this.todo});
+
+                this.todo.name = "";
+                this.validation.reset();
+            })
         }
     }
 }
