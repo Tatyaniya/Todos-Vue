@@ -1,19 +1,26 @@
 <template lang="pug">
     .todo-input
         div.error {{validation.firstError('todo.name')}}
+        input.check(
+                type="checkbox"
+                @change="checkTodosAll"
+                :todos="todos"
+            )
         input.input(
             type="text"
             placeholder="Todo Name"
             autofocus
             v-model="todo.name"
             :class="{'valid-error': validation.hasError('todo.name')}"
-            @keydown.enter="addTodo"
+            @keydown.enter="addNewTodo"
         )
         
 </template>
 
 <script>
-import {Validator} from 'simple-vue-validator';
+import { Validator } from 'simple-vue-validator';
+import { mapState } from 'vuex';
+import { mapMutations } from 'vuex';
 
 let uniqId = 0;
 
@@ -33,21 +40,28 @@ export default {
             }
         }
     },
-    components: {
-       
+     computed: {
+        ...mapState({
+            todos: state => state.todos.todos
+        }),
     },
     methods: {
-        addTodo() {
+        ...mapMutations(['addTodo', 'checkAll']),
+        addNewTodo() {
             this.$validate().then(success => {
                 if (!success) return;
 
                 uniqId++;
                 this.todo.id = uniqId;
-                this.$emit('addTodo', {...this.todo});
+                //this.$emit('addTodo', {...this.todo});
+                this.addTodo({...this.todo});
 
                 this.todo.name = "";
                 this.validation.reset();
             })
+        },
+        checkTodosAll() {
+            this.todos = this.checkAll(todos);
         }
     }
 }
@@ -56,7 +70,7 @@ export default {
 <style lang="scss" scoped>
 .input {
     font-size: 24px;
-    padding: 16px 16px 16px 60px;
+    padding: 16px 25px;
     border: 1px solid transparent;
     background: rgba(0, 0, 0, 0.003);
     box-shadow: inset 0 -2px 1px rgba(0, 0, 0, 0.03);
@@ -70,7 +84,10 @@ export default {
     border: 1px solid firebrick;
 }
 .todo-input {
+    display: flex;
+    align-items: center;
     position: relative;
+    padding-left: 15px;
 }
 .error {
     position: absolute;
