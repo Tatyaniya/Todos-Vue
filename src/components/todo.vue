@@ -4,7 +4,7 @@
             todoInput(
                 @checked="checkedHandler"
                 :isList="isList"
-                :checked="isChecked"
+                :isChecked="isChecked"
             )
             todoList(
                 :checked="checked"
@@ -51,7 +51,7 @@ export default {
         },
         isChecked() {
             if (this.todos.length == 0) {
-                return false;
+                this.checked = false;
             }
         }
     },
