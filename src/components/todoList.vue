@@ -11,7 +11,7 @@
                 .counter {{todos.length}} items left
                 .filter
                     todoListFilter
-                .clear(v-if="")
+                .clear(v-if="checked")
                     button.remove(
                         type="button"
                         @click="clearAllTodos"
@@ -24,17 +24,20 @@ import todoListFilter from './todoListFilter';
 import { mapMutations } from 'vuex';
 
 export default {
-    ...mapMutations(['clearTodos']),
     props: {
-        todos: Array
+        checked: Boolean,
+        todos: Array,
     },
     components: {
         todoListItem,
         todoListFilter
     },
     methods: {
+        ...mapMutations( {
+            clear: 'clearTodos'
+        }),
         clearAllTodos() {
-            this.clearTodos();
+            this.clear();
         }
     }
 }

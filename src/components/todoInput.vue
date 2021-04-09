@@ -2,6 +2,7 @@
     .todo-input
         div.error {{validation.firstError('todo.name')}}
         input.check(
+            v-if="isList"
             type="checkbox"
             @change="checkTodosAll"
         )
@@ -38,8 +39,11 @@ export default {
             }
         }
     },
+    props: {
+        isList: Boolean
+    },
     methods: {
-        ...mapMutations(['addTodo', 'checkAll']),
+        ...mapMutations(['addTodo', 'checkAll', 'isTodos']),
         addNewTodo() {
             this.$validate().then(success => {
                 if (!success) return;
@@ -55,6 +59,7 @@ export default {
         },
         checkTodosAll(e) {
             this.checkAll(e);
+            this.$emit('checked')
         }
     }
 }

@@ -1,8 +1,12 @@
 <template lang="pug">
     div
         .todo
-            todoInput
+            todoInput(
+                @checked="checkedHandler"
+                :isList="isList"
+            )
             todoList(
+                :checked="checked"
                 v-if="todos.length > 0"
                 :todos="filteredTodos"
             )
@@ -16,11 +20,10 @@ import { mapState } from 'vuex';
 import { mapMutations } from 'vuex';
 
 export default {
-    ...mapMutations(['checkAll']),
+    ...mapMutations(['checkAll', 'isTodos']),
     data() {
         return {
-            // todos: [],
-            // filter: 'all'
+            checked: false
         }
     },
     components: {
@@ -41,11 +44,19 @@ export default {
                 case 'completed':
                     return this.todos.filter(item => item.checked);
             }
+        },
+        isList() {
+            return this.todos.length > 0;
         }
     },
     methods: {
         checkTodosAll() {
             this.todos = checkAll(todos);
+        },
+        checkedHandler() {
+            this.checked = !this.checked;
+            
+            console.log(this.checked);
         }
     }
 }
