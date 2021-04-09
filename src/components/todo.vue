@@ -11,7 +11,7 @@
                 v-if="todos.length > 0"
                 :todos="filteredTodos"
             )
-        pre {{todos}}
+        //pre {{todos}}
 </template>
 
 <script>
@@ -61,8 +61,6 @@ export default {
         },
         checkedHandler() {
             this.checked = !this.checked;
-            
-            console.log(this.checked);
         }
     }
 }

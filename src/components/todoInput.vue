@@ -3,7 +3,6 @@
         div.error {{validation.firstError('todo.name')}}
         input.check(
             v-if="isList"
-            isChecked="isChecked"
             type="checkbox"
             @change="checkTodosAll"
         )
@@ -41,8 +40,7 @@ export default {
         }
     },
     props: {
-        isList: Boolean,
-        isChecked: Boolean
+        isList: Boolean
     },
     methods: {
         ...mapMutations(['addTodo', 'checkAll', 'isTodos']),
