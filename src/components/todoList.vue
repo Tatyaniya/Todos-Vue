@@ -60,6 +60,7 @@ export default {
     text-align: center;
     position: relative;
     font-size: 14px;
+    
     &:before {
         content: '';
         position: absolute;
